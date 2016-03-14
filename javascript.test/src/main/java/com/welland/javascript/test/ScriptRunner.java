@@ -1,8 +1,8 @@
 package com.welland.javascript.test;
 
+import javax.script.Bindings;
 import javax.script.CompiledScript;
 import javax.script.ScriptException;
-import javax.script.SimpleBindings;
 
 /**
  * Hello world!
@@ -11,9 +11,11 @@ import javax.script.SimpleBindings;
 public class ScriptRunner 
 {
     private CompiledScript script;
+    private Bindings bindings;
 
     public ScriptRunner(CompiledScript script){
         this.script = script;
+        this.bindings = script.getEngine().createBindings();
     }
 
     public Object evaluate(ResultUtil utils, Object input) throws ScriptException {
@@ -21,7 +23,6 @@ public class ScriptRunner
         if (input == null) {
             scriptInput = "";
         }
-        SimpleBindings bindings = new SimpleBindings();
         bindings.put("input", scriptInput);
         bindings.put("utils", utils);
         Object result = script.eval(bindings);
