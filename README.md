@@ -13,3 +13,10 @@ At EclipseCon, I met an Oracle Java product manager, who was not convinced that 
 On the way home, I decided to take another look. With fresh eyes, I saw that we were creating a new SimpleBindings for each execution. This seems like the right thing to do, since the bindings holds arguments for each execution, and the CompiledScript.eval call accepts the bindings as a parameter. Since I had tried everything else, I decided to try reusing the Bindings. Lo and behold, that was the answer. Moving the creation of the bindings outside of the loop fixed the peformance. Now with JIT able to do its thing, Nashorn is even faster than J2V8.
 
 ![Performance Chart v2](Javascript Performance v2.png)
+
+For comparison, here is a chart showing just Nashorn with the old code that created new bindings versus the new code that reuses the bindings.
+
+![Nashorn Performance](Nashorn.png)
+
+#tl;dr;
+If you’re using Nashorn to run JavaScript on Java 8, be careful how you manage your Bindings.
